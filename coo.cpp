@@ -66,11 +66,10 @@ uint8_t coo::write_coo(const char *filename)
 	return 0;
 }
 
-matrix *coo::coo_to_matr(matrix *matr)
+void coo::coo_to_matr(matrix *matr)
 {
 	uint32_t i, j, k;
-	matrix * Temp = new matrix(matr->rows, matr->cols);
-	
+
 	for (i = 0, k = 0; i < matr->rows; ++i) {
 		for (j = 0; j < matr->cols; j++) {
 			if ((j == this->array[1][k]) && (i == this->array[2][k])) {
@@ -81,16 +80,12 @@ matrix *coo::coo_to_matr(matrix *matr)
 			}
 		}
 	}
-	
-	return Temp;
 }
 
-csr *coo_to_csr(csr *CSR)
+void coo_to_csr(csr *CSR)
 {
 	uint32_t i, j, k;
-	matrix * Temp = new matrix(matr->rows, matr->cols);
 
-	return Temp;
 }
 
 coo::~coo()

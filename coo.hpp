@@ -19,7 +19,7 @@ class coo {
 		void print_coo();
 		uint8_t read_coo(const char *filename);
 		uint8_t write_coo(const char *filename);
-		matrix *coo_to_matr(matrix *matr);
-		csr *coo_to_csr(csr *CSR);
+		void coo_to_matr(matrix *matr);
+		void coo_to_csr(csr *CSR);
 		~coo();
 };
