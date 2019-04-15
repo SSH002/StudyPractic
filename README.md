@@ -1,2 +1,3 @@
 # StudyPractic
-Учебная практика
+
+Here are only the source code and nothing more.
