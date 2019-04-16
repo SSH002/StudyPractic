@@ -2,7 +2,7 @@
 using namespace std;
 
 //Вычисляет кол-во элементов в строке number
-uint32_t line_size(const char *filename, uint32_t number)
+uint32_t cols_size(const char *filename, uint32_t number)
 {
 	uint32_t i, size = 1;
 	char *string = new char[max_linesize];
@@ -20,5 +20,22 @@ uint32_t line_size(const char *filename, uint32_t number)
 	}
 
 	delete[] string;
+	return size;
+}
+
+uint32_t rows_size(const char *filename)
+{
+	uint32_t i, size = 1;
+	FILE *f = fopen(filename, "r");
+	char symb;
+
+	while (fscanf(f, "%c", &symb) != EOF) {
+		switch (symb) {
+		case '\n':
+			++size;
+		break;
+		}
+	}
+
 	return size;
 }
