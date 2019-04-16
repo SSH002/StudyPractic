@@ -24,7 +24,9 @@ class matrix {
 		void gen_matrix();
 		uint8_t read_matr(const char *filename);
 		uint8_t write_matr(const char *filename);
-
+		void coo_size(uint32_t *size);
+		void csr_size(uint32_t *size, uint32_t *size_row);
+		void bsr_size(uint32_t *size, uint32_t *size_col, uint32_t *size_row, const uint8_t bs);
 		void matr_to_coo(coo *COO);
 		void matr_to_csr(csr *CSR);
 		void matr_to_bsr(bsr *BSR);

@@ -124,6 +124,23 @@ void matrix::csr_size(uint32_t *size, uint32_t *size_row)
 	*size_row = this->rows + 1;
 }
 
+void matrix::bsr_size(uint32_t *size, uint32_t *size_col, uint32_t *size_row, const uint8_t bs)
+{
+	uint32_t i, j;
+
+	for (i = 0, *size_col = 0;  i < this->rows; i += bs) {
+		for (j = 0; j < this->cols; j += bs) {
+			if ((this->array[i][j]) || (this->array[i + 1][j]) ||
+				(this->array[i][j + 1]) || (this->array[i+ 1][j + 1])) {
+				++(*size_col);
+			}
+		}
+	}
+	
+	*size = (*size_col) * pow(bs, 2);
+	*size_row = (this->rows / bs) + 1;
+}
+
 void matrix::matr_to_coo(coo *COO)
 {
 	uint32_t i, j, k;
@@ -160,14 +177,14 @@ void matrix::matr_to_csr(csr *CSR)
 
 void matrix::matr_to_bsr(bsr *BSR)
 {
-	uint32_t i, j, k, l, m, count, n = 0, full = 0;
+	uint32_t i, j, k, l, m, count, n = 0;
 
 	for (i = 0, m = 0, count = 0; i < this->rows; i += BSR->blocksize, ++m) {
 		BSR->array[2][m] = count;
 		for (j = 0; j < this->cols; j += BSR->blocksize) {
 			if ((this->array[i][j]) || (this->array[i + 1][j]) ||
 				(this->array[i][j + 1]) || (this->array[i+ 1][j + 1])) {
-				BSR->array[1][count] = m;
+				BSR->array[1][count] = j / BSR->blocksize;
 				++count;
 				for (k = i; k < BSR->blocksize + i; ++k) {
 					for (l = j; l < BSR->blocksize + j; ++l) {
