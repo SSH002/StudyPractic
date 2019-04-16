@@ -19,7 +19,6 @@ void bsr::print_bsr()
 {
 	uint32_t i;
 
-	//Вывод BSR-матрицы на экран
 	for (i = 0; i < this->count; ++i) {
 		cout << this->array[0][i] << " ";
 	} cout << endl;
@@ -31,7 +30,6 @@ void bsr::print_bsr()
 	} cout << endl;
 }
 
-//Считывание BSR-матрицы из файла
 uint8_t bsr::read_bsr(const char *filename)
 {
 	uint32_t i;
@@ -42,7 +40,6 @@ uint8_t bsr::read_bsr(const char *filename)
 		return 1;
 	}
 
-	//Заполнение BSR-матрицы
 	for (i = 0; i < this->count; ++i) {
 		file >> this->array[0][i];
 	}
@@ -57,7 +54,6 @@ uint8_t bsr::read_bsr(const char *filename)
 	return 0;
 }
 
-//Запись в файл BSR-матрицы
 uint8_t bsr::write_bsr(const char *filename)
 {
 	uint32_t i;

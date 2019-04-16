@@ -96,6 +96,33 @@ uint8_t matrix::write_matr(const char *filename)
 	return 0;
 }
 
+void matrix::coo_size(uint32_t *size)
+{
+	uint32_t i, j;
+
+	for (i = 0, *size = 0; i < this->rows; ++i) {
+		for (j = 0; j < this->cols; ++j) {
+			if (this->array[i][j]) {
+				++(*size);
+			}
+		}
+	}
+}
+
+void matrix::csr_size(uint32_t *size, uint32_t *size_row)
+{
+	uint32_t i, j;
+
+	for (i = 0, *size = 0; i < this->rows; ++i) {
+		for (j = 0; j < this->cols; ++j) {
+			if (this->array[i][j]) {
+				++(*size);
+			}
+		}
+	}
+
+	*size_row = this->rows + 1;
+}
 
 void matrix::matr_to_coo(coo *COO)
 {
@@ -129,6 +156,31 @@ void matrix::matr_to_csr(csr *CSR)
 	}
 
 	CSR->array[2][i] = k;
+}
+
+void matrix::matr_to_bsr(bsr *BSR)
+{
+	uint32_t i, j, k, l, m, count, n = 0, full = 0;
+
+	for (i = 0, m = 0, count = 0; i < this->rows; i += BSR->blocksize, ++m) {
+		BSR->array[2][m] = count;
+		for (j = 0; j < this->cols; j += BSR->blocksize) {
+			if ((this->array[i][j]) || (this->array[i + 1][j]) ||
+				(this->array[i][j + 1]) || (this->array[i+ 1][j + 1])) {
+				BSR->array[1][count] = m;
+				++count;
+				for (k = i; k < BSR->blocksize + i; ++k) {
+					for (l = j; l < BSR->blocksize + j; ++l) {
+						BSR->array[0][n] = this->array[k][l];
+						++n;
+					}
+				}
+			}
+		}
+	}
+
+	//Записываем кол-во блоков
+	BSR->array[2][m] = count;
 }
 
 matrix::~matrix()
