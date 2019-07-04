@@ -1,0 +1,9 @@
+Debug
+Release
+x64
+.vs
+*.vcxproj
+*.filters
+*.user
+*.sln
+Study_Practic/old.txt
